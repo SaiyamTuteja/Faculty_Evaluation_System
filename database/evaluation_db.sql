@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2020 at 01:59 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.28
+-- Generation Time: May 13, 2024 at 12:15 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -34,7 +33,7 @@ CREATE TABLE `academic_list` (
   `semester` int(30) NOT NULL,
   `is_default` tinyint(1) NOT NULL DEFAULT 0,
   `status` int(1) NOT NULL DEFAULT 0 COMMENT '0=Pending,1=Start,2=Closed'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `academic_list`
@@ -56,7 +55,7 @@ CREATE TABLE `class_list` (
   `curriculum` text NOT NULL,
   `level` text NOT NULL,
   `section` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class_list`
@@ -77,7 +76,7 @@ CREATE TABLE `criteria_list` (
   `id` int(30) NOT NULL,
   `criteria` text NOT NULL,
   `order_by` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `criteria_list`
@@ -97,7 +96,7 @@ CREATE TABLE `evaluation_answers` (
   `evaluation_id` int(30) NOT NULL,
   `question_id` int(30) NOT NULL,
   `rate` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_answers`
@@ -129,7 +128,7 @@ CREATE TABLE `evaluation_list` (
   `faculty_id` int(30) NOT NULL,
   `restriction_id` int(30) NOT NULL,
   `date_taken` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_list`
@@ -155,7 +154,7 @@ CREATE TABLE `faculty_list` (
   `password` text NOT NULL,
   `avatar` text NOT NULL DEFAULT 'no-image-available.png',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `faculty_list`
@@ -163,6 +162,37 @@ CREATE TABLE `faculty_list` (
 
 INSERT INTO `faculty_list` (`id`, `school_id`, `firstname`, `lastname`, `email`, `password`, `avatar`, `date_created`) VALUES
 (1, '20140623', 'George', 'Wilson', 'gwilson@sample.com', 'd40242fb23c45206fadee4e2418f274f', '1608011100_avatar.jpg', '2020-12-15 13:45:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `school_id` int(11) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `avatar` blob NOT NULL,
+  `date_created` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`school_id`, `firstname`, `lastname`, `email`, `password`, `class_id`, `avatar`, `date_created`) VALUES
+(2147483647, 'First Name', 'Last Name', 'Email', '$2y$10$V92q2fOjeVF2w3nytZW.0ujYaXRIkgGjvgxM4YeORjH.DYoeghPgG', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:07:06'),
+(2147483647, 'First Name', 'Last Name', 'Email', '$2y$10$7N3M8FR1bk/8EQTsvefLO.3lrRLjEkxr.7yFtOjEK8wrQZzzpWyGC', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:07:54'),
+(2147483647, 'First Name', 'Last Name', 'Email', '$2y$10$SdEjr8VQqawKFFp/wh8VSuVvziaff2eIfnoUk6x3ZNiugBSsX0pOO', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:09:41'),
+(2147483647, 'First Name', 'Last Name', 'Email', '$2y$10$Z29fa69.rW9HlrYIs/c65OxhbKyGg9swh3Wy/1teNPIGUOEuDxUUC', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:09:50'),
+(1234, 'First Name', 'Last Name', 'Email', '$2y$10$RmIGErAfd/yAk9uZQ9YToO3lBD1saaVXQXdF.J4RB/UiQTiKSf0Si', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:10:26'),
+(1234, 'First Name', 'Last Name', 'Email', '$2y$10$DD4eJy6fZiFf6i8qzjMzDe/EI62P6m2M.j9UH13xMREeQhI7ub9YG', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:11:14'),
+(2147483647, 'First Name', 'Last Name', 'Email', '$2y$10$fdwpZ0D6ZjW6tB7czhm.xOfd6.gmUhP0IhDLQzSnwzna8YILoWs4a', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:11:23'),
+(1231, 'First Name', 'Last Name', 'Email', '$2y$10$MYPAqgIkdYzmKOkvXw84g.sLNzvAlCV8nUa3Q7BH5j9bIwaS7evkC', 0, 0x6e6f2d696d6167652d617661696c61626c652e706e67, '2024-05-11 18:13:08');
 
 -- --------------------------------------------------------
 
@@ -176,7 +206,7 @@ CREATE TABLE `question_list` (
   `question` text NOT NULL,
   `order_by` int(30) NOT NULL,
   `criteria_id` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `question_list`
@@ -200,7 +230,7 @@ CREATE TABLE `restriction_list` (
   `faculty_id` int(30) NOT NULL,
   `class_id` int(30) NOT NULL,
   `subject_id` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `restriction_list`
@@ -227,7 +257,7 @@ CREATE TABLE `student_list` (
   `class_id` int(30) NOT NULL,
   `avatar` text NOT NULL DEFAULT 'no-image-available.png',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student_list`
@@ -236,7 +266,14 @@ CREATE TABLE `student_list` (
 INSERT INTO `student_list` (`id`, `school_id`, `firstname`, `lastname`, `email`, `password`, `class_id`, `avatar`, `date_created`) VALUES
 (1, '6231415', 'John', 'Smith', 'jsmith@sample.com', '1254737c076cf867dc53d60a0364f38e', 1, '1608012360_avatar.jpg', '2020-12-15 14:06:14'),
 (2, '101497', 'Claire', 'Blake', 'cblake@sample.com', '4744ddea876b11dcb1d169fadf494418', 2, '1608012720_47446233-clean-noir-et-gradient-sombre-image-de-fond-abstrait-.jpg', '2020-12-15 14:12:03'),
-(3, '123', 'Mike', 'Williams', 'mwilliams@sample.com', '3cc93e9a6741d8b40460457139cf8ced', 1, '1608034680_1605601740_download.jpg', '2020-12-15 20:18:22');
+(3, '123', 'Mike', 'Williams', 'mwilliams@sample.com', '3cc93e9a6741d8b40460457139cf8ced', 1, '1608034680_1605601740_download.jpg', '2020-12-15 20:18:22'),
+(8, '38123871628', 'First Name', 'Last Name', 'Email', '$2y$10$7N3M8FR1bk/8EQTsvefLO.3lrRLjEkxr.7yFtOjEK8wrQZzzpWyGC', 0, 'no-image-available.png', '2024-05-11 18:07:54'),
+(9, '38123871628', 'First Name', 'Last Name', 'Email', '$2y$10$SdEjr8VQqawKFFp/wh8VSuVvziaff2eIfnoUk6x3ZNiugBSsX0pOO', 0, 'no-image-available.png', '2024-05-11 18:09:41'),
+(10, '38123871628', 'First Name', 'Last Name', 'Email', '$2y$10$Z29fa69.rW9HlrYIs/c65OxhbKyGg9swh3Wy/1teNPIGUOEuDxUUC', 0, 'no-image-available.png', '2024-05-11 18:09:50'),
+(11, '1234', 'First Name', 'Last Name', 'Email', '$2y$10$RmIGErAfd/yAk9uZQ9YToO3lBD1saaVXQXdF.J4RB/UiQTiKSf0Si', 0, 'no-image-available.png', '2024-05-11 18:10:26'),
+(12, '1234', 'First Name', 'Last Name', 'Email', '$2y$10$DD4eJy6fZiFf6i8qzjMzDe/EI62P6m2M.j9UH13xMREeQhI7ub9YG', 0, 'no-image-available.png', '2024-05-11 18:11:14'),
+(13, '38123871628', 'First Name', 'Last Name', 'Email', '$2y$10$fdwpZ0D6ZjW6tB7czhm.xOfd6.gmUhP0IhDLQzSnwzna8YILoWs4a', 0, 'no-image-available.png', '2024-05-11 18:11:23'),
+(14, '1231', 'First Name', 'Last Name', 'Email', '$2y$10$MYPAqgIkdYzmKOkvXw84g.sLNzvAlCV8nUa3Q7BH5j9bIwaS7evkC', 0, 'no-image-available.png', '2024-05-11 18:13:08');
 
 -- --------------------------------------------------------
 
@@ -249,7 +286,7 @@ CREATE TABLE `subject_list` (
   `code` varchar(50) NOT NULL,
   `subject` text NOT NULL,
   `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subject_list`
@@ -273,7 +310,7 @@ CREATE TABLE `system_settings` (
   `contact` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `cover_img` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `system_settings`
@@ -296,14 +333,15 @@ CREATE TABLE `users` (
   `password` text NOT NULL,
   `avatar` text NOT NULL DEFAULT 'no-image-available.png',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `avatar`, `date_created`) VALUES
-(1, 'Administrator', '', 'admin@admin.com', '0192023a7bbd73250516f069df18b500', '1607135820_avatar.jpg', '2020-11-26 10:57:04');
+(1, '', '', 'admin@gmail.com', 'admin123', 'no-image-available.png', '2024-05-11 17:19:18'),
+(2, '', '', 'admin@gmail.com', 'admin123', 'no-image-available.png', '2024-05-11 17:19:35');
 
 --
 -- Indexes for dumped tables
@@ -425,7 +463,7 @@ ALTER TABLE `restriction_list`
 -- AUTO_INCREMENT for table `student_list`
 --
 ALTER TABLE `student_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `subject_list`
@@ -443,7 +481,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

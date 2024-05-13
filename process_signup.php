@@ -3,13 +3,16 @@ session_start();
 include('./db_connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get user data from the form
+    $CUID = $_POST['CUID'];
+    $firstName = $_POST['firstname'];
+    $lastName = $_POST['lastname'];
+    $email = $_POST['email'];
     $CUID = $_POST['CUID'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hash the password for security
     $user_type = $_POST['user_type'];
 
     // Insert the user data into the student_list table
-    $insert_query = "INSERT INTO student_list (school_id, firstname, lastname, email, password, class_id) VALUES ('$CUID', 'First Name', 'Last Name', 'Email', '$password', 'Class ID')";
+    $insert_query = "INSERT INTO student_list (school_id, firstname, lastname, email, password, class_id) VALUES ('$CUID', '$firstName', '$lastName', '$email', '$password', 'Class ID')";
     if ($conn->query($insert_query) === TRUE) {
         // Fetch the user data from the student_list table
         $select_query = "SELECT * FROM student_list WHERE id = " . $conn->insert_id;
@@ -30,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )";
             if ($conn->query($insert_login_query) === TRUE) {
                 // Registration is complete. You can display a success message and redirect the user.
-                echo "Registration successful!";
-                header("location: login.php"); // Redirect to the login page
+                echo "successful";
+                // header("location: login.php"); // Redirect to the login page
             } else {
                 // Handle any database insert errors for the login table
                 echo "Error: " . $insert_login_query . "<br>" . $conn->error;
