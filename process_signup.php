@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // header("location: login.php"); // Redirect to the login page
             } else {
                 // Handle any database insert errors for the login table
-                echo "Error: " . $insert_login_query . "<br>" . $conn->error;
+                // echo "Error: " . $insert_login_query . "<br>" . $conn->error;
             }
         }
     } else {
