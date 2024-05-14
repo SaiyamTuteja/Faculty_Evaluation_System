@@ -78,7 +78,30 @@ if(isset($_SESSION['login_id']))
                 </div>
               </div>
             </div>
-            <!-- Rest of your form inputs -->
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" name="firstname" required placeholder="First Name">
+              <div class="input-group-append">
+                <div class ="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" name="lastname" required placeholder="Last Name">
+              <div class="input-group-append">
+                <div class ="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" name="email" required placeholder="Email">
+              <div class="input-group-append">
+                <div class ="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
             <div class="input-group mb-3">
               <input type="password" class="form-control" name="password" required placeholder="Password">
               <div class="input-group-append">
@@ -122,25 +145,38 @@ if(isset($_SESSION['login_id']))
   
   <script>
     $(document).ready(function(){
-      $('#signup-form').submit(function(e){
-        e.preventDefault();
-        // Handle form submission and user registration using AJAX
-        // You'll need to write JavaScript/jQuery code to send the data to your server
-        // and handle the registration process.
-        
-        // Simulate a successful signup for demonstration purposes
-        // In your actual code, you'll handle this based on your server response
-        setTimeout(function() {
+  $('#signup-form').submit(function(e){
+    e.preventDefault();
+    
+    // Get form data
+    var formData = $(this).serialize();
+    
+    // Send AJAX request
+    $.ajax({
+      type: 'POST',
+      url: 'process_signup.php', 
+      data: formData,
+      success: function(response){
+        // Handle success response
+        if(response == 'successful') {
           showSuccessPopup();
-        }, 2000); // Show the success message after 2 seconds (you can adjust this timing)
-      });
-      
-      // Function to show the success pop-up
-      function showSuccessPopup() {
-        var successPopup = document.getElementById("successPopup");
-        successPopup.style.display = "block";
+        } else {
+          // alert('Error: ' + response); 
+          console.log("Error: " + response);
+        }
+      },
+      error: function(xhr, status, error){
+        console.error(xhr.responseText); 
       }
     });
+  });
+
+  function showSuccessPopup() {
+    var successPopup = document.getElementById("successPopup");
+    successPopup.style.display = "block";
+  }
+});
+
   </script>
   
   <?php include 'footer.php' ?>
