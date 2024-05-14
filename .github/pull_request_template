@@ -2,14 +2,23 @@
 
 _Add your description_
 
-## Related Issues
+## Related Issues: Issue for which you are raising a PR for
 
 - Closes #
 
+### Issue
+
+[Issue number or description]
+
 ### Checklist
 
-- [ ] I have gone through the [contributing guide](https://github.com/animator/learn-python/blob/main/CONTRIBUTING.md)
+- [ ] I have gone through the [contributing guide](https://github.com/SaiyamTuteja/Faculty_Evaluation_System/blob/main/CONTRIBUTING.md)
 - [ ] I have updated my branch and synced it with project `main` branch before making this PR
+- [ ] Is this a bug fix/enhancement/documentation changes
+- [ ] Part of GSSOC
+- [ ] Tested for any breaking changes
+- [ ] Other relevant checks completed
+
 
 ## Undertaking
 
