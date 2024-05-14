@@ -45,7 +45,7 @@ header("location:index.php?page=home");
   <div class="card">
     <div class="card-body login-card-body">
         <div class="login-logo">
-            <img src="logo.png" alt="Your Image Alt Text">
+            <img src="profpraisal.png" alt="Your Image Alt Text">
         </div>
         <form action="" id="login-form">
   <!-- <div class="card">
