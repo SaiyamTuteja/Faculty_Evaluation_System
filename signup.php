@@ -68,7 +68,7 @@ if(isset($_SESSION['login_id']))
         <div class="card-body signup-card-body">
           <form action="process_signup.php" method="POST" id="signup-form">
           <div class="signup-logo">
-            <img src="logo.png" alt="Your Image Alt Text">
+            <img src="profpraisal.png" alt="Your Image Alt Text">
           </div>
             <div class="input-group mb-3">
               <input type="text" class="form-control" name="CUID" required placeholder="CUID">
