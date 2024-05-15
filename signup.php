@@ -36,7 +36,8 @@ if(isset($_SESSION['login_id']))
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 100% of viewport height */
+    /* height: 100vh; 100% of viewport height */
+    max-height: fit-content;
   }
 
   .signup-box {
