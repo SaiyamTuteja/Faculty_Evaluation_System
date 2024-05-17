@@ -63,7 +63,7 @@ header("location:index.php?page=home");
           <input type="password" class="form-control" name="password" required placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <span class="fas fa-eye"></span>
             </div>
           </div>
         </div>
@@ -127,6 +127,18 @@ header("location:index.php?page=home");
     })
   })
   })
+
+  $(document).ready(function(){
+  $("#password-toggle").click(function() {
+    if ($("#password").attr("type") == "password") {
+      $("#password").attr("type", "text");
+      $(this).children("span").removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+      $("#password").attr("type", "password");
+      $(this).children("span").removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+  });
+});
 </script>
 <?php include 'footer.php' ?>
 
