@@ -54,7 +54,7 @@ header("location:index.php?page=home");
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="email" required placeholder="Email">
           <div class="input-group-append">
-            <div class="input-group-text">
+            <div class="input-group-text" id="password-toggle">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
