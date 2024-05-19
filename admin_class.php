@@ -1,3 +1,22 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+
+Class Action {
+    private $db;
+
+    public function __construct() {
+        ob_start();
+        include 'db_connect.php';
+
+        $this->db = $conn;
+    }
+
+    function __destruct() {
+        $this->db->close();
+        ob_end_flush();
+    }
+
 function login(){
     extract($_POST);
     $type = array("","users","faculty_list","student_list");
