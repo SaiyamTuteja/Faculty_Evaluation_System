@@ -1,0 +1,55 @@
+{
+  "name": "verifalia/sdk",
+  "description": "Verifalia provides a simple HTTPS-based API for validating email addresses and checking whether they are deliverable or not. This library allows to easily integrate with Verifalia and verify email addresses in real-time.",
+  "homepage": "https://verifalia.com/",
+  "keywords": [
+    "verifalia",
+    "email",
+    "validation",
+    "verification",
+    "free",
+    "service",
+    "saas",
+    "list",
+    "hygiene",
+    "cleaning",
+    "mx",
+    "smtp",
+    "mailbox",
+    "scrub"
+  ],
+  "authors": [
+    {
+      "name": "Rudy Chiappetta"
+    },
+    {
+      "name": "John Grounz"
+    },
+    {
+      "name": "Efran Cobisi"
+    },
+    {
+      "name": "Stefano Tatah"
+    },
+    {
+      "name": "Germano Mosconi"
+    },
+    {
+      "name": "Alex Soffiateli"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Verifalia\\": "lib/Verifalia"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "ext-json": "*"
+  },
+  "support": {
+    "issues": "https://github.com/verifalia/verifalia-php-sdk/issues"
+  },
+  "license": "MIT"
+}
