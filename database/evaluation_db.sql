@@ -295,7 +295,7 @@ CREATE TABLE `users` (
   `lastname` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` text NOT NULL,
-  `avatar` text NOT NULL DEFAULT 'no-image-available.png',
+  `avatar` varchar(255) NOT NULL DEFAULT 'no-image-available.png',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
