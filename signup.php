@@ -89,7 +89,7 @@ if (isset($_SESSION['login_id']))
               <input type="name" class="form-control" name="firstname" required placeholder="First Name">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                <span class="fas fa-user"></span>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ if (isset($_SESSION['login_id']))
               <input type="name" class="form-control" name="lastname" required placeholder="Last Name">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                <span class="fas fa-user"></span>
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@ if (isset($_SESSION['login_id']))
               <input type="email" class="form-control" name="email" required placeholder="Email">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
+                <span class="fas fa-envelope"></span>
                 </div>
               </div>
             </div>
