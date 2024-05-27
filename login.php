@@ -4,157 +4,76 @@
 session_start();
 include ('./db_connect.php');
 ob_start();
-// if(!isset($_SESSION['system'])){
 
 $system = $conn->query("SELECT * FROM system_settings")->fetch_array();
 foreach ($system as $k => $v) {
   $_SESSION['system'][$k] = $v;
 }
-// }
+
 ob_end_flush();
-?>
-<?php
-if (isset($_SESSION['login_id']))
-  header("location:index.php?page=home");
 
-?>
-<?php include 'header.php' ?>
-
-<style>
-  .login-logo {
-    text-align: center;
-    margin-bottom: 20px;
-    /* Adjust as needed */
-  }
-
-  .login-logo img {
-    width: 200px;
-    /* Set the width as per your requirements */
-    height: auto;
-    /* This maintains the image's aspect ratio */
-  }
-</style>
-
-<body class="hold-transition login-page bg-white">
-
-  <h2><b>COER AQMS</b></h2>
-  <div class="login-box">
-    <div class="login-logo">
-      <a href="#" class="text-white"></a>
-    </div>
-    <!-- /.login-logo -->
-
-
-    <div class="card">
-      <div class="card-body login-card-body">
-        <div class="login-logo">
-          <img src="profpraisal.png" alt="Your Image Alt Text">
-        </div>
-        <form action="" id="login-form">
-          <!-- <div class="card">
-    <div class="card-body login-card-body">
-      <form action="" id="login-form"> -->
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" name="email" required placeholder="Email">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" required placeholder="Password">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock" onclick="togglePasswordVisibility()"></span>
-                <span class="fas fa-eye" style="display:none;" onclick="togglePasswordVisibility()"></span>
-              </div>
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label for="">Login As</label>
-            <select name="login" id="" class="custom-select custom-select-sm">
-              <option value="3">Student</option>
-              <option value="2">Faculty</option>
-              <option value="1">Admin</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
-                </label>
-              </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-            </div>
-            <p class="mb-1">
-              Don't have an account? <a href="signup.php" class="text-center">Sign up</a>
-            </p>
-
-            <!-- /.col -->
-          </div>
-        </form>
-      </div>
-      <!-- /.login-card-body -->
-    </div>
-  </div>
-  <!-- /.login-box -->
-  <script>
-    $(document).ready(function () {
-      $('#login-form').submit(function (e) {
-        e.preventDefault()
-        start_load()
-        if ($(this).find('.alert-danger').length > 0)
-          $(this).find('.alert-danger').remove();
-        $.ajax({
-          url: 'ajax.php?action=login',
-          method: 'POST',
-          data: $(this).serialize(),
-          error: err => {
-            console.log(err)
-            end_load();
-
-          },
-          success: function (resp) {
-            if (resp == 1) {
-              location.href = 'index.php?page=home';
-            } else {
-              $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
-              end_load();
-            }
-          }
-        })
-      })
-    })
-  </script>
-  <script>
-function togglePasswordVisibility() {
-  var passwordInput = document.querySelector('[name="password"]');
-  var lockIcon = document.querySelector('.fa-lock');
-  var eyeIcon = document.querySelector('.fa-eye');
-
-  // Check if the password is currently visible
-  if (passwordInput.type === 'password') {
-    // If hidden, change to 'text' to show it and toggle icons
-    passwordInput.type = 'text';
-    lockIcon.style.display = 'none';
-    eyeIcon.style.display = 'block';
-  } else {
-    // If visible, change to 'password' to hide it and toggle icons
-    passwordInput.type = 'password';
-    lockIcon.style.display = 'block';
-    eyeIcon.style.display = 'none';
-  }
+if (isset($_SESSION['login_id'])) {
+    header("location:index.php?page=home");
+    exit;
 }
 
-  </script>
-  <?php include 'footer.php' ?>
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    extract($_POST);
+    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `email` = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $data = $result->fetch_assoc();
+        if (password_verify($password, $data['password'])) {
+            foreach ($data as $k => $v) {
+                if ($k != 'password') {
+                    $_SESSION[$k] = $v;
+                }
+            }
+            $_SESSION['msg']['success'] = "You have logged in successfully.";
+            header('location: ./');
+            exit;
+        } else {
+            $error = "Incorrect Email or Password";
+        }
+    } else {
+        $error = "Incorrect Email or Password";
+    }
+}
+?>
+<?php include 'header.php' ?>
+<body>
+    <h1 id="page-title" class="text-center">Login Page</h1>
+    <hr id="title_hr" class="mx-auto">
+    <div id="login-wrapper">
+        <div class="text-muted"><small><em>Please fill in all the required fields</em></small></div>
+        <?php if (isset($error) && !empty($error)): ?>
+            <div class="message-error"><?= $error ?></div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['msg']['success']) && !empty($_SESSION['msg']['success'])): ?>
+        <div class="message-success">
+            <?php 
+            echo $_SESSION['msg']['success'];
+            unset($_SESSION['msg']);
+            ?>
+        </div>  
+        <?php endif; ?>
+        <form action="" method="POST">
+            <div class="input-field">
+                <label for="email" class="input-label">Email</label>
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? "", ENT_QUOTES) ?>" required="required">
+            </div>
+            <div class="input-field">
+                <label for="password" class="input-label">Password</label>
+                <input type="password" id="password" name="password" value="<?= htmlspecialchars($_POST['password'] ?? "", ENT_QUOTES) ?>" required="required">
+            </div>
+            <div class="input-field">
+                <a href="forgot-password.php" tabindex="-1"><small><strong>Forgot Password?</strong></small></a>
+            </div>
+            <button class="login-btn" type="submit">Login</button>
+        </form>
+    </div>
 </body>
-
 </html>
+<?php include 'footer.php' ?>
