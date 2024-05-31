@@ -81,7 +81,7 @@ if (isset($_SESSION['login_id']))
               <input type="text" class="form-control" name="CUID" required placeholder="CUID">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa fa-id-card"></span>
+                <i class="fa-regular fa-id-card"></i>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@ if (isset($_SESSION['login_id']))
               <input type="name" class="form-control" name="firstname" required placeholder="First Name">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                <i class="fa-regular fa-user"></i>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ if (isset($_SESSION['login_id']))
               <input type="name" class="form-control" name="lastname" required placeholder="Last Name">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                <i class="fa-regular fa-user"></i>
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@ if (isset($_SESSION['login_id']))
               <input type="email" class="form-control" name="email" required placeholder="Email">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
+                <i class="fa-regular fa-envelope"></i>
                 </div>
               </div>
             </div>
@@ -138,6 +138,7 @@ if (isset($_SESSION['login_id']))
                 <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
               </div>
             </div>
+            All ready have an account?<a href="login.php"> Login here! </a>
           </form>
         </div>
         <!-- /.signup-card-body -->
