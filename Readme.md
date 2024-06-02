@@ -148,3 +148,4 @@ Congratulations🎉, you have made a pull request to the Faculty Evaluation Syst
 ## 💻How to run on your local system
 
 ![record](record.mp4)
+
