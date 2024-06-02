@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="email" class="form-control" name="email" required placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+              <i class="fa-regular fa-envelope"></i>
               </div>
             </div>
           </div>
