@@ -58,6 +58,14 @@
           ?>
       </div><!--/. container-fluid -->
     </section>
+
+   <div class="container">
+        <h1>Contributors</h1>
+        <?php
+        // Include contributors.php file
+        include 'contributors.php';
+        ?>
+    </div>
     <!-- /.content -->
     <div class="modal fade" id="confirm_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
