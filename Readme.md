@@ -152,9 +152,16 @@ Congratulations🎉, you have made a pull request to the Faculty Evaluation Syst
 
 <h2 align = "center">Our Contributors ❤️</h2>
 <div align = "center">
- <h3>Thank you for contributing to our repository.😃</h3>
-   
-![Contributors]([https://contributors-img.web.app/image?repo=Yeasir0032/Discord-Clone](https://contributors-img.web.app/image?repo=SaiyamTuteja/Faculty_Evaluation_System))
+ <div>
+  <h2><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png" width="35" height="35"> Contributors</h2>
+</div>
+
+Thank you for contributing to our project! We appreciate your help in Faculty_Evaluation_System even better.😃
+
+<center>
+<a href="https://github.com/SaiyamTuteja/Faculty_Evaluation_System/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SaiyamTuteja/Faculty_Evaluation_System" />
+</a>
 
 ### Show some ❤️ by starring this awesome repository!
 
