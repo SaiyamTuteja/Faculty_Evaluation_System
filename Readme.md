@@ -148,3 +148,14 @@ Congratulations🎉, you have made a pull request to the Faculty Evaluation Syst
 ## 💻How to run on your local system
 
 ![record](record.mp4)
+
+
+<h2 align = "center">Our Contributors ❤️</h2>
+<div align = "center">
+ <h3>Thank you for contributing to our repository.😃</h3>
+   
+![Contributors]([https://contributors-img.web.app/image?repo=Yeasir0032/Discord-Clone](https://contributors-img.web.app/image?repo=SaiyamTuteja/Faculty_Evaluation_System))
+
+### Show some ❤️ by starring this awesome repository!
+
+</div>
