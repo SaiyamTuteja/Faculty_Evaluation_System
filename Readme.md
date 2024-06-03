@@ -145,6 +145,43 @@ git push -u origin <your_branch_name>
 Congratulations🎉, you have made a pull request to the Faculty Evaluation System. Wait for your submission to be accepted and merged.
 
 
-## 💻How to run on your local system
+## 💻How to run on your local system and setup database
 
-![record](record.mp4)
+1. Firstly, open the folder database 
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/a3df1ac8-a145-44f8-b095-0b879db60379)
+
+## Database Initialization
+
+To set up the database, you can download the `evaluation_db.zip` file, which contains the `evaluation_db.sql` file.
+
+[Download evaluation_db.zip](database/evaluation_db.zip)
+
+
+2. After downloading the SQL file, setup XAMPP
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/d3c428ec-2ba9-474f-9e78-4e5a75e0ff4b)
+
+
+3. Click on `ADMIN` in the MYSQL, then MyPhpAdmin would open up
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/a378ffe9-3cbd-4bd1-9f33-91db89d2a8f5)
+
+
+4. Click on new to create a database with the name `evaluation_db`
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/807e3908-ab4e-42e1-9475-b8637fa7717b)
+
+
+5. Now click on import, where you need to upload the file previously downloaded to setup the database and get all the tables in the database
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/e166dbf5-63cf-40a7-aa0d-e39715905e5f)
+
+
+6. Finally, you could see the tables in the database
+
+![image](https://github.com/meenakshiiyer2531/Faculty_Evaluation_System/assets/74537549/6d57fde5-7c72-43e2-9d08-1a7f39428820)
+
+
+For more information refer to the video documentation:
+[Video](https://drive.google.com/file/d/10mM0y7YKW3bdqq_ltcBM38YxIAF4iP-u/view?usp=sharing)
