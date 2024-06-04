@@ -15,7 +15,7 @@ Class Action {
 	    ob_end_flush();
 	}
 
-	function login(){
+	/*function login(){
 		extract($_POST);
 		$type = array("","users","faculty_list","student_list");
 		$type2 = array("","admin","faculty","student");
@@ -38,6 +38,36 @@ Class Action {
 		}else{
 			return 2;
 		}
+	}*/
+
+	function login()
+	{
+		extract($_POST);
+		$type = array("", "users", "faculty_list", "student_list");
+		$type2 = array("", "admin", "faculty", "student");
+		$qry = $this->db->query("SELECT *,concat(firstname,' ',lastname) as name FROM student_list where email = '$email'");
+		if ($qry->num_rows == 1) {
+		  $row = $qry->fetch_array();
+		  if (password_verify($_POST['password'], $row['password'])) {
+			foreach ($row as $key => $value) {
+			  if ($key != 'password' && !is_numeric($key))
+				$_SESSION['login_' . $key] = $value;
+			}
+	  
+			$_SESSION['login_type'] = $login;
+			$_SESSION['login_view_folder'] = $type2[$login] . '/';
+			$academic = $this->db->query("SELECT * FROM academic_list where is_default = 1 ");
+			if ($academic->num_rows > 0) {
+			  foreach ($academic->fetch_array() as $k => $v) {
+				if (!is_numeric($k))
+				  $_SESSION['academic'][$k] = $v;
+			  }
+			}
+			return 1;
+		  } else
+			return  'Invalid password';
+		} else
+		  echo "Invalid email";
 	}
 	function logout(){
 		session_destroy();
