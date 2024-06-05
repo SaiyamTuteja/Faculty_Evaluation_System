@@ -1,21 +1,19 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <?php
 session_start();
-include('./db_connect.php');
+include ('./db_connect.php');
 ob_start();
 
 $system = $conn->query("SELECT * FROM system_settings")->fetch_array();
-foreach($system as $k => $v){
+foreach ($system as $k => $v) {
   $_SESSION['system'][$k] = $v;
 }
 
 ob_end_flush();
 ?>
 <?php
-if(isset($_SESSION['login_id']))
+if (isset($_SESSION['login_id']))
   header("location:index.php?page=home");
 ?>
 <?php include 'header.php' ?>
@@ -23,12 +21,15 @@ if(isset($_SESSION['login_id']))
 <style>
   .signup-logo {
     text-align: center;
-    margin-bottom: 20px; /* Adjust as needed */
+    margin-bottom: 20px;
+    /* Adjust as needed */
   }
 
   .signup-logo img {
-    width: 200px; /* Set the width as per your requirements */
-    height: auto; /* This maintains the image's aspect ratio */
+    width: 200px;
+    /* Set the width as per your requirements */
+    height: auto;
+    /* This maintains the image's aspect ratio */
   }
 
   .signup-container {
@@ -41,8 +42,10 @@ if(isset($_SESSION['login_id']))
   }
 
   .signup-box {
-    max-width: 400px; /* Adjust the width as needed */
-    text-align: center; /* Center align text inside the box */
+    max-width: 400px;
+    /* Adjust the width as needed */
+    text-align: center;
+    /* Center align text inside the box */
   }
 
   /* Add styles for the success pop-up */
@@ -66,14 +69,14 @@ if(isset($_SESSION['login_id']))
 <body class="hold-transition login-page bg-white">
   <div class="signup-container">
     <div class="signup-box">
-     
+
       <h2><b>AQMS - Sign Up</b></h2>
       <div class="card">
         <div class="card-body signup-card-body">
           <form action="process_signup.php" method="POST" id="signup-form">
-          <div class="signup-logo">
-            <img src="profpraisal.png" alt="Your Image Alt Text">
-          </div>
+            <div class="signup-logo">
+              <img src="profpraisal.png" alt="Your Image Alt Text">
+            </div>
             <div class="input-group mb-3">
               <input type="text" class="form-control" id="CUID" name="CUID" required placeholder="CUID">
               <div class="input-group-append">
@@ -107,18 +110,19 @@ if(isset($_SESSION['login_id']))
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" name="password" required placeholder="Password">
+              <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
               <div class="input-group-append">
-                <div class ="input-group-text">
-                  <span class="fas fa-lock"></span>
+                <div class="input-group-text" onclick="togglePasswordVisibility('password')">
+                  <span id="passwordIcon" class="fas fa-lock"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" name="Conform_password" required placeholder="Conform_Password">
+              <input type="password" class="form-control" id="Conform_password" name="Conform_password" required
+                placeholder="Confirm_Password">
               <div class="input-group-append">
-                <div class ="input-group-text">
-                  <span class="fas fa-lock"></span>
+                <div class="input-group-text" onclick="togglePasswordVisibility('Conform_password')">
+                  <span id="Conform_passwordIcon" class="fas fa-lock"></span>
                 </div>
               </div>
             </div>
@@ -134,6 +138,7 @@ if(isset($_SESSION['login_id']))
                 <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
               </div>
             </div>
+            All ready have an account?<a href="login.php"> Login here! </a>
           </form>
         </div>
         <!-- /.signup-card-body -->
@@ -141,7 +146,7 @@ if(isset($_SESSION['login_id']))
     </div>
   </div>
   <!-- /.signup-container -->
-  
+
   <!-- Success pop-up message -->
   <div id="successPopup" class="popup-message">
 
@@ -257,7 +262,24 @@ if(isset($_SESSION['login_id']))
     }
 
   </script>
-  
+
+  <script>
+    function togglePasswordVisibility(passwordId) {
+      var passwordInput = document.getElementById(passwordId);
+      var passwordIcon = document.getElementById(passwordId + 'Icon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.classList.remove('fa-lock');
+        passwordIcon.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-lock');
+      }
+    }
+  </script>
   <?php include 'footer.php' ?>
 </body>
+
 </html>

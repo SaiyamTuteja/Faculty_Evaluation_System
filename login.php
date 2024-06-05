@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('./db_connect.php');
-
 if (isset($_GET['action']) && $_GET['action'] == 'login') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -75,7 +74,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
         </div>
         <form action="" id="login-form">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" value="bavdhankarpranav1@gmail.com" name="email" required placeholder="Email">
+            <input type="email" class="form-control" name="email" required placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -83,7 +82,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" value="Pranav@123" required placeholder="Password">
+            <input type="password" class="form-control" name="password" required placeholder="Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock" onclick="togglePasswordVisibility()"></span>
@@ -120,14 +119,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
     </div>
   </div>
 
-
-
-
   <script>
     $(document).ready(function () {
       $('#login-form').submit(function (e) {
-        e.preventDefault()
-        start_load()
+          e.preventDefault();
+        
         if ($(this).find('.alert-danger').length > 0)
           $(this).find('.alert-danger').remove();
         $.ajax({
@@ -135,15 +131,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
           method: 'POST',
           data: $(this).serialize(),
           error: err => {
-            console.log(err)
-            end_load();
+           
           },
           success: function (resp) {
             if (resp == 1) {
               location.href = 'index.php?page=home';
             } else {
               $('#login-form').prepend('<div class="alert alert-danger">' + resp + '.</div>')
-              end_load(); 
+              
             }
           }
         })
@@ -152,34 +147,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
   </script>
 
   <script>
-    $(document).ready(function () {
-        $('#login-form').submit(function (e) {
-            e.preventDefault();
-            start_load();
-            if ($(this).find('.alert-danger').length > 0)
-                $(this).find('.alert-danger').remove();
-            $.ajax({
-                url: 'login.php?action=login',
-                method: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                error: err => {
-                    console.log(err);
-                    end_load();
-                },
-                success: function (resp) {
-                    console.log(resp); // Log the response for debugging
-                    if (resp.status === 'success') {
-                        location.href = 'index.php?page=home';
-                    } else {
-                        $('#login-form').prepend('<div class="alert alert-danger">' + resp.message + '</div>');
-                        end_load();
-                    }
-                }
-            });
-        });
-    });
-
+  
     function togglePasswordVisibility() {
         var passwordInput = document.querySelector('[name="password"]');
         var lockIcon = document.querySelector('.fa-lock');

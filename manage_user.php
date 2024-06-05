@@ -65,28 +65,37 @@ foreach($user->fetch_array() as $k =>$v){
 	    }
 	}
 	$('#manage-user').submit(function(e){
-		e.preventDefault();
-		start_load()
-		$.ajax({
-			url:'ajax.php?action=update_user',
-			data: new FormData($(this)[0]),
-		    cache: false,
-		    contentType: false,
-		    processData: false,
-		    method: 'POST',
-		    type: 'POST',
-			success:function(resp){
-				if(resp ==1){
-					alert_toast("Data successfully saved",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
-				}else{
-					$('#msg').html('<div class="alert alert-danger">Username already exist</div>')
-					end_load()
-				}
-			}
-		})
-	})
+    e.preventDefault();
+    $.ajax({
+        url: 'ajax.php?action=update_user',
+        data: new FormData($(this)[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST',
+        success: function(resp){
+            try {
+                var response = JSON.parse(resp);
+                if (response.status === 1) {
+                    alert_toast(response.message, 'success');
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1500);
+                } else if (response.status === 2) {
+                    $('#msg').html('<div class="alert alert-danger">' + response.message + '</div>');
+                } else {
+                    $('#msg').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            } catch (e) {
+                $('#msg').html('<div class="alert alert-danger">An unexpected error occurred. Please try again.</div>');
+            }
+        },
+        error: function(xhr, status, error){
+            $('#msg').html('<div class="alert alert-danger">An error occurred: ' + xhr.responseText + '</div>');
+        }
+    });
+});
+
 
 </script>
