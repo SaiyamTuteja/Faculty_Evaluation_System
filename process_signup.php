@@ -18,19 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($check_result->num_rows > 0) {
         // CUID already exists
-        echo "already registered";
+        $response = ['status' => 'error', 'message' => 'CUID already registered'];
     } else {
         // CUID does not exist, proceed with insertion
         $insert_query = "INSERT INTO $table (school_id, firstname, lastname, email, password) VALUES ('$CUID', '$firstName', '$lastName', '$email', '$password')";
         if ($conn->query($insert_query) === TRUE) {
-            echo "successful";
+            $response = ['status' => 'success', 'message' => 'Registration successful'];
         } else {
             // Handle any database insert errors
-            echo "Error: " . $insert_query . "<br>" . $conn->error;
+            $response = ['status' => 'error', 'message' => 'Error: ' . $insert_query . '<br>' . $conn->error];
         }
     }
-}
 
-// Close the database connection if needed
-$conn->close();
-?>
+    // Send the response to the AJAX call
+    echo json_encode($response);
+}

@@ -1,22 +1,26 @@
 <?php
-require 'vendor/autoload.php';
-use Verifalia\VerifaliaRestClient;
+$curl = curl_init();
 
-// Initialize the Verifalia client
-$verifaliaClient = new VerifaliaRestClient('210196b9cbb94f48a9a4e9d8eed01b3b', 'q6G9-V.9kaVDPYs');
+$data = [
+    'email' =>$_POST['email'],
+];
 
-// Get the email from the AJAX request
-$email = $_POST['email'];
+$post_data = http_build_query($data);
 
-// Verify the email address
-$verification = $verifaliaClient->emailValidations->submit($email);
+curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://disify.com/api/email",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $post_data,
+));
 
-// Wait for the completion of the verification job
-$verifaliaClient->emailValidations->waitForCompletion($verification->id);
+$response = curl_exec($curl);
+$err = curl_error($curl);
 
-// Fetch the completed verification job
-$verification = $verifaliaClient->emailValidations->get($verification->id);
+curl_close($curl);
 
-// Return the verification result
-echo json_encode($verification->entries[0]);
-?>
+if ($err) {
+    echo "cURL Error #:" . $err;
+} else {
+    echo $response;
+}
