@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
             $_SESSION['msg']['success'] = "You have logged in successfully.";
-            header('location: ./');
+            header("location:index.php?page=home");
             exit;
         } else {
             $error = "Incorrect Email or Password";
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php endif; ?>
         <form action="" method="POST" id="login-form">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" name="email" required placeholder="Email">
+            <input type="email" class="form-control" value="bavdhankarpranav1@gmail.com" name="email" required placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
               <i class="fa-regular fa-envelope"></i>
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" required placeholder="Password">
+            <input type="password" class="form-control" name="password" value="Pranav@123" required placeholder="Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock" onclick="togglePasswordVisibility()"></span>
@@ -127,6 +127,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
     </div>
   </div>
+
+
+
+
+  <script>
+    $(document).ready(function () {
+      $('#login-form').submit(function (e) {
+        e.preventDefault()
+        start_load()
+        if ($(this).find('.alert-danger').length > 0)
+          $(this).find('.alert-danger').remove();
+        $.ajax({
+          url: 'ajax.php?action=login',
+          method: 'POST',
+          data: $(this).serialize(),
+          error: err => {
+            console.log(err)
+            end_load();
+          },
+          success: function (resp) {
+            if (resp == 1) {
+              location.href = 'index.php?page=home';
+            } else {
+              $('#login-form').prepend('<div class="alert alert-danger">' + resp + '.</div>')
+              end_load(); 
+            }
+          }
+        })
+      })
+    })
+  </script>
 
   <script>
     function togglePasswordVisibility() {
