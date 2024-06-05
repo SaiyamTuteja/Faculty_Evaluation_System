@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 {
     "githubPullRequests.ignoredPullRequestBranches": [
         "main"
     ]
-=======
-{
-    "githubPullRequests.ignoredPullRequestBranches": [
-        "main"
-    ]
->>>>>>> 45cf71ee32cd3b4457f58ced17ae24f08046eb6f
 }

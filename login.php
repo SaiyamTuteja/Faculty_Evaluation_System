@@ -2,7 +2,7 @@
 session_start();
 include('./db_connect.php');
 
-if(isset($_GET['action']) && $_GET['action'] == 'login'){
+if (isset($_GET['action']) && $_GET['action'] == 'login') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $user_type = $_POST['login'];
@@ -18,11 +18,11 @@ if(isset($_GET['action']) && $_GET['action'] == 'login'){
         echo json_encode(['status' => 'error', 'message' => 'Invalid user type']);
         exit();
     }
-    
+
     // Fetch the user data from the table
     $query = "SELECT * FROM $table WHERE email = '$email'";
     $result = $conn->query($query);
-    
+
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
@@ -30,7 +30,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login'){
             $_SESSION['login_id'] = $user['school_id'];
             $_SESSION['login_email'] = $user['email'];
             $_SESSION['login_user_type'] = $user_type;
-            
+
             echo json_encode(['status' => 'success']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Username or password is incorrect']);
@@ -88,7 +88,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login'){
           </div>
           <div class="form-group mb-3">
             <label for="">Login As</label>
-            <select name="login" id="" class="custom-select custom-select-sm">
+            <select name="login" class="custom-select custom-select-sm">
               <option value="3">Student</option>
               <option value="2">Faculty</option>
               <option value="1">Admin</option>
@@ -133,7 +133,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login'){
                 },
                 success: function (resp) {
                     console.log(resp); // Log the response for debugging
-                    if (resp.status == 'success') {
+                    if (resp.status === 'success') {
                         location.href = 'index.php?page=home';
                     } else {
                         $('#login-form').prepend('<div class="alert alert-danger">' + resp.message + '</div>');
