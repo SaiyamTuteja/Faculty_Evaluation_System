@@ -10,10 +10,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
     // Determine the table based on user type
     if ($user_type == '3') {
         $table = 'student_list';
+        $_SESSION['login_view_folder'] = 'student/';
     } else if ($user_type == '2') {
         $table = 'faculty_list';
+        $_SESSION['login_view_folder'] = 'faculty/';
     } else if ($user_type == '1') {
         $table = 'admin_list'; // Change this to your actual admin table
+        $_SESSION['login_view_folder'] = 'admin/';
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Invalid user type']);
         exit();
@@ -29,7 +32,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'login') {
             // Password is correct, set session variables
             $_SESSION['login_id'] = $user['school_id'];
             $_SESSION['login_email'] = $user['email'];
-            $_SESSION['login_user_type'] = $user_type;
+            $_SESSION['login_firstname'] = $user['firstname'];
+            $_SESSION['login_avatar']= $user['avatar'];
+            $_SESSION['login_type'] = $user_type;
 
             echo json_encode(['status' => 'success']);
         } else {
