@@ -19,7 +19,8 @@ if (!isset($_SESSION['system'])) {
 }
 
 if (isset($_COOKIE['login_id'])) {
-  $qry = $conn->query("SELECT *,concat(firstname,' ',lastname) as name FROM $_COOKIE[login_type] where id = $_COOKIE[login_id];");  
+  $type = array("", "users", "faculty_list", "student_list");
+  $qry = $conn->query("SELECT *,concat(firstname,' ',lastname) as name FROM "  . $type[$_COOKIE['login_type']] . " where id = $_COOKIE[login_id];");  
   if ($qry->num_rows == 1) {
     // Setting all the login key values
     $row = $qry->fetch_assoc();

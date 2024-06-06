@@ -60,7 +60,7 @@ class Action
 				{
 					$expiry = time() +  (30 * 24 * 60 * 60); // Creats a expiry date for 30 days
 					setcookie('login_id', $row["id"], $expiry, '/');
-					setcookie('login_type', $type[$login], $expiry, '/');
+					setcookie('login_type', $login, $expiry, '/');
 					setcookie('login_view_folder', $type2[$login] . '/', $expiry, '/');
 				}
 
