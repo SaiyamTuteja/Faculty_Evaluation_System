@@ -55,6 +55,14 @@ class Action
 					if ($key != 'password' && !is_numeric($key))
 						$_SESSION['login_' . $key] = $value;
 				}
+				// Setting cookie values for 'remember-me' feature
+				if(isset($_POST['remember']))
+				{
+					$expiry = time() +  (30 * 24 * 60 * 60); // Creats a expiry date for 30 days
+					setcookie('login_id', $row["id"], $expiry, '/');
+					setcookie('login_type', $type[$login], $expiry, '/');
+					setcookie('login_view_folder', $type2[$login] . '/', $expiry, '/');
+				}
 
 				$_SESSION['login_type'] = $login;
 				$_SESSION['login_view_folder'] = $type2[$login] . '/';
@@ -65,6 +73,8 @@ class Action
 							$_SESSION['academic'][$k] = $v;
 					}
 				}
+
+
 				return 1;
 			} else
 				return 'Invalid password';
@@ -73,10 +83,14 @@ class Action
 	}
 	function logout()
 	{
-		session_destroy();
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);
 		}
+		setcookie('login_id', '', time() - 1000, '/');
+		setcookie('login_type', '', time() - 1000, '/');
+		setcookie('login_view_folder', '', time()-10000, '/');
+
+		session_destroy();
 		header("location:login.php");
 	}
 	function login2()
