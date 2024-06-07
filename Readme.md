@@ -1,14 +1,14 @@
-# 👩‍🏫Faculty Evaluation System
+# 👩‍🏫ProfPraisal
 
 
-## 👇About Faculty Evaluation System
-The Faculty Evaluation System is a PHP/MySQL project that helps an individual school manage its evaluation results. The system has three user types which are the Administrator, Faculties, and the Students.
+## 👇About ProfPraisal
+The ProfPraisal is a PHP/MySQL project that helps an individual school manage its evaluation results. The system has three user types which are the Administrator, Faculties, and the Students.
 <br>
 The Administrator user is in-charge of maintaining and populate the data in the system database using the front-end feature for the admin sides, such as the list of subjects, faculties, students, and some other related data. The student users are permitted only to evaluate the faculties assigned to their class per issue.The faculties users are only allowed to view their evaluation result even the evaluation is still ongoing.
 
 
 ## 🌟 Why Use This System
-1. **Efficient Evaluation Management:** The Faculty Evaluation System streamlines the evaluation process, ensuring that all evaluations are systematically organized and managed.
+1. **Efficient Evaluation Management:** The ProfPraisal streamlines the evaluation process, ensuring that all evaluations are systematically organized and managed.
 
 2. **User-friendly Interface:** The system provides an intuitive and easy-to-navigate interface for all user types, enhancing user experience and reducing the learning curve.
 
@@ -58,7 +58,7 @@ The Administrator user is in-charge of maintaining and populate the data in the 
 
 ## 🤝How to Contribute
 
-If you think that you can add a new feature or want to fix a bug, we invite you to contribute to **Faculty Evaluation System
+If you think that you can add a new feature or want to fix a bug, we invite you to contribute to **ProfPraisal
 ** and make this project better. 
 <br>To start contributing, follow the below instructions:
 
@@ -142,7 +142,7 @@ git push -u origin <your_branch_name>
 18.  Click on  `Create pull request`.
     
 
-Congratulations🎉, you have made a pull request to the Faculty Evaluation System. Wait for your submission to be accepted and merged.
+Congratulations🎉, you have made a pull request to the ProfPraisal. Wait for your submission to be accepted and merged.
 
 
 ## 💻How to run on your local system and setup database
