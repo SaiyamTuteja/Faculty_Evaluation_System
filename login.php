@@ -12,7 +12,7 @@ foreach ($system as $k => $v) {
 
 ob_end_flush();
 
-if (isset($_SESSION['login_id'])) {
+if (isset($_SESSION['login_id']) || isset($_COOKIE['login_id'])) {
     header("location:index.php?page=home");
     exit;
 }
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="remember">
+                <input type="checkbox" id="remember" name="remember">
                 <label for="remember">Remember Me</label>
               </div>
             </div>
