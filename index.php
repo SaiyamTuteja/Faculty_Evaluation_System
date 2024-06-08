@@ -59,6 +59,78 @@ include 'header.php'
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white">
         </div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+  	 <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
+	    <div class="toast-body text-white">
+	    </div>
+	  </div>
+    <div id="toastsContainerTopRight" class="toasts-top-right fixed"></div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"><?php echo $title ?></h1>
+          </div><!-- /.col -->
+
+        </div><!-- /.row -->
+            <hr class="border-primary">
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+         <?php 
+            $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+            if(!file_exists($_SESSION['login_view_folder'].$page.".php")){
+                include '404.html';
+            }else{
+            include $_SESSION['login_view_folder'].$page.'.php';
+
+            }
+          ?>
+      </div><!--/. container-fluid -->
+    </section>
+
+   <div class="container">
+        <h1>Contributors</h1>
+        <?php
+        // Include contributors.php file
+        include 'contributors.php';
+        ?>
+    </div>
+    <!-- /.content -->
+    <div class="modal fade" id="confirm_modal" role='dialog'>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+      </div>
+      <div class="modal-body">
+        <div id="delete_content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="uni_modal" role='dialog'>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title"></h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
       <div id="toastsContainerTopRight" class="toasts-top-right fixed"></div>
       <!-- Content Header (Page header) -->
