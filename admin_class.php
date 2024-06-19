@@ -177,50 +177,70 @@ Class Action {
 		}
 	}
 
-	function update_user(){
+	function update_user() {
 		extract($_POST);
 		$data = "";
-		$type = array("","users","faculty_list","student_list");
-	foreach($_POST as $k => $v){
-			if(!in_array($k, array('id','cpass','table','password')) && !is_numeric($k)){
-				
-				if(empty($data)){
+		$type = array("", "users", "faculty_list", "student_list");
+		$table = $type[$_SESSION['login_type']];
+	
+		// Build the data string for the SQL query
+		foreach($_POST as $k => $v) {
+			if(!in_array($k, array('id', 'cpass', 'table', 'password')) && !is_numeric($k)) {
+				if(empty($data)) {
 					$data .= " $k='$v' ";
-				}else{
+				} else {
 					$data .= ", $k='$v' ";
 				}
 			}
 		}
-		$check = $this->db->query("SELECT * FROM {$type[$_SESSION['login_type']]} where email ='$email' ".(!empty($id) ? " and id != {$id} " : ''))->num_rows;
-		if($check > 0){
-			return 2;
+	
+		// Check if email already exists
+		$check = $this->db->query("SELECT * FROM $table WHERE email = '$email' " . (!empty($id) ? "AND id != $id" : ''))->num_rows;
+		if($check > 0) {
+			return json_encode(['status' => 2, 'message' => 'Email already exists']);
 			exit;
 		}
-		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != ''){
-			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/uploads/'. $fname);
-			$data .= ", avatar = '$fname' ";
-
-		}
-		if(!empty($password))
-			$data .= " ,password=md5('$password') ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO {$type[$_SESSION['login_type']]} set $data");
-		}else{
-			echo "UPDATE {$type[$_SESSION['login_type']]} set $data where id = $id";
-			$save = $this->db->query("UPDATE {$type[$_SESSION['login_type']]} set $data where id = $id");
-		}
-
-		if($save){
-			foreach ($_POST as $key => $value) {
-				if($key != 'password' && !is_numeric($key))
-					$_SESSION['login_'.$key] = $value;
+	
+		// Handle avatar upload
+		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != '') {
+			$fname = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/uploads/' . $fname);
+			if ($move) {
+				$data .= ", avatar = '$fname' ";
+			} else {
+				return json_encode(['status' => 0, 'message' => 'Failed to upload image']);
+				exit;
 			}
-			if(isset($_FILES['img']) && !empty($_FILES['img']['tmp_name']))
-					$_SESSION['login_avatar'] = $fname;
-			return 1;
+		}
+	
+		// Handle password update
+		if(!empty($password)) {
+			$data .= " ,password=md5('$password') ";
+		}
+	
+		// Execute the SQL query
+		if(empty($id)) {
+			$save = $this->db->query("INSERT INTO $table SET $data");
+		} else {
+			$save = $this->db->query("UPDATE $table SET $data WHERE id = $id");
+		}
+	
+		// Check if save was successful
+		if($save) {
+			foreach ($_POST as $key => $value) {
+				if($key != 'password' && !is_numeric($key)) {
+					$_SESSION['login_' . $key] = $value;
+				}
+			}
+			if(isset($_FILES['img']) && !empty($_FILES['img']['tmp_name'])) {
+				$_SESSION['login_avatar'] = $fname;
+			}
+			return json_encode(['status' => 1, 'message' => 'Data successfully saved']);
+		} else {
+			return json_encode(['status' => 0, 'message' => 'An error occurred. Please try again.']);
 		}
 	}
+	
 	function delete_user(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM users where id = ".$id);
