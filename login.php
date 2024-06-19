@@ -1,47 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 session_start();
 include('./db_connect.php');
-ob_start();
+if (isset($_GET['action']) && $_GET['action'] == 'login') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $user_type = $_POST['login'];
 
-$system = $conn->query("SELECT * FROM system_settings")->fetch_array();
-foreach ($system as $k => $v) {
-  $_SESSION['system'][$k] = $v;
-}
+    // Determine the table based on user type
+    if ($user_type == '3') {
+        $table = 'student_list';
+        $_SESSION['login_view_folder'] = 'student/';
+    } else if ($user_type == '2') {
+        $table = 'faculty_list';
+        $_SESSION['login_view_folder'] = 'faculty/';
+    } else if ($user_type == '1') {
+        $table = 'admin_list'; // Change this to your actual admin table
+        $_SESSION['login_view_folder'] = 'admin/';
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid user type']);
+        exit();
+    }
 
-ob_end_flush();
+    // Fetch the user data from the table
+    $query = "SELECT * FROM $table WHERE email = '$email'";
+    $result = $conn->query($query);
 
-if (isset($_SESSION['login_id'])) {
-    header("location:index.php?page=home");
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    extract($_POST);
-    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `email` = ?");
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        $data = $result->fetch_assoc();
-        if (password_verify($password, $data['password'])) {
-            foreach ($data as $k => $v) {
-                if ($k != 'password') {
-                    $_SESSION[$k] = $v;
-                }
-            }
-            $_SESSION['msg']['success'] = "You have logged in successfully.";
-            header("location:index.php?page=home");
-            exit;
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            // Password is correct, set session variables
+            $_SESSION['login_id'] = $user['school_id'];
+            $_SESSION['login_email'] = $user['email'];
+            $_SESSION['login_firstname'] = $user['firstname'];
+            $_SESSION['login_avatar']= $user['avatar'];
+            $_SESSION['login_type'] = $user_type;
+
+            echo json_encode(['status' => 'success']);
         } else {
-            $error = "Incorrect Email or Password";
+            echo json_encode(['status' => 'error', 'message' => 'Username or password is incorrect']);
         }
     } else {
-        $error = "Incorrect Email or Password";
+        echo json_encode(['status' => 'error', 'message' => 'Username or password is incorrect']);
     }
+    exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 <?php include 'header.php' ?>
 
 <style>
@@ -53,47 +59,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     width: 200px;
     height: auto;
   }
-  .message-error {
-    color: red;
-  }
-  .message-success {
-    color: green;
-  }
 </style>
 
 <body class="hold-transition login-page bg-white">
   <h2><b>COER AQMS</b></h2>
   <div class="login-box">
     <div class="login-logo">
-      <img src="profpraisal.png" alt="Your Image Alt Text">
+      <a href="#" class="text-white"></a>
     </div>
     <div class="card">
       <div class="card-body login-card-body">
         <div class="login-logo">
           <img src="profpraisal.png" alt="Your Image Alt Text">
         </div>
-        <?php if (isset($error) && !empty($error)): ?>
-          <div class="alert alert-danger"><?= $error ?></div>
-        <?php endif; ?>
-        <?php if (isset($_SESSION['msg']['success']) && !empty($_SESSION['msg']['success'])): ?>
-          <div class="alert alert-success">
-            <?php 
-            echo $_SESSION['msg']['success'];
-            unset($_SESSION['msg']);
-            ?>
-          </div>
-        <?php endif; ?>
-        <form action="" method="POST" id="login-form">
+        <form action="" id="login-form">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" value="bavdhankarpranav1@gmail.com" name="email" required placeholder="Email">
+            <input type="email" class="form-control" name="email" required placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
-              <i class="fa-regular fa-envelope"></i>
+                <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" value="Pranav@123" required placeholder="Password">
+            <input type="password" class="form-control" name="password" required placeholder="Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock" onclick="togglePasswordVisibility()"></span>
@@ -113,29 +102,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="col-8">
               <div class="icheck-primary">
                 <input type="checkbox" id="remember">
-                <label for="remember">Remember Me</label>
+                <label for="remember">
+                  Remember Me
+                </label>
               </div>
             </div>
             <div class="col-4">
               <button type="submit" class="btn btn-primary btn-block">Sign In</button>
             </div>
+            <p class="mb-1">
+              Don't have an account? <a href="signup.php" class="text-center">Sign up</a>
+            </p>
           </div>
-          <p class="mb-1">
-            Don't have an account? <a href="signup.php" class="text-center">Sign up</a>
-          </p>
         </form>
       </div>
     </div>
   </div>
 
-
-
-
   <script>
     $(document).ready(function () {
       $('#login-form').submit(function (e) {
-        e.preventDefault()
-        start_load()
+          e.preventDefault();
+        
         if ($(this).find('.alert-danger').length > 0)
           $(this).find('.alert-danger').remove();
         $.ajax({
@@ -143,15 +131,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           method: 'POST',
           data: $(this).serialize(),
           error: err => {
-            console.log(err)
-            end_load();
+           
           },
           success: function (resp) {
             if (resp == 1) {
               location.href = 'index.php?page=home';
             } else {
               $('#login-form').prepend('<div class="alert alert-danger">' + resp + '.</div>')
-              end_load(); 
+              
             }
           }
         })
@@ -160,20 +147,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </script>
 
   <script>
+  
     function togglePasswordVisibility() {
-      var passwordInput = document.querySelector('[name="password"]');
-      var lockIcon = document.querySelector('.fa-lock');
-      var eyeIcon = document.querySelector('.fa-eye');
+        var passwordInput = document.querySelector('[name="password"]');
+        var lockIcon = document.querySelector('.fa-lock');
+        var eyeIcon = document.querySelector('.fa-eye');
 
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        lockIcon.style.display = 'none';
-        eyeIcon.style.display = 'block';
-      } else {
-        passwordInput.type = 'password';
-        lockIcon.style.display = 'block';
-        eyeIcon.style.display = 'none';
-      }
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            lockIcon.style.display = 'none';
+            eyeIcon.style.display = 'block';
+        } else {
+            passwordInput.type = 'password';
+            lockIcon.style.display = 'block';
+            eyeIcon.style.display = 'none';
+        }
     }
   </script>
 
